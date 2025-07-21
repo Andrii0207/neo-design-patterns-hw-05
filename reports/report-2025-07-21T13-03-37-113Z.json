@@ -1,0 +1,19 @@
+{
+  "files": 558,
+  "directories": 112,
+  "totalSize": 27417681,
+  "extensions": {
+    "": 56,
+    ".sample": 14,
+    ".ts": 262,
+    ".md": 32,
+    ".json": 50,
+    ".js": 95,
+    ".mjs": 8,
+    ".map": 34,
+    ".mts": 2,
+    ".txt": 2,
+    ".csv": 1,
+    ".xml": 2
+  }
+}

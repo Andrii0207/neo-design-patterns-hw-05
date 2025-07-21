@@ -18,5 +18,36 @@ export class ReportManager {
     this.facade = new AnalyzerFacade(this.adapter);
   }
 
-  // TODO: Implement the ReportManager class
+  private initReportsDirectory(): void {
+    if(!fs.existsSync(ReportManager.REPORTS_DIR))
+      fs.mkdirSync(ReportManager.REPORTS_DIR)
+  }
+
+  private getAdapter(format: string): [ReportAdapter, string] {
+    switch (format.toLowerCase()) {
+      case "json":
+        return [new JsonReportAdapter(), "json"];
+      case "xml":
+        return [new XmlReportAdapter(), "xml"];
+      case "csv":
+        return [new CsvReportAdapter(), "csv"];
+      default:
+        throw new Error(`Unsupported format: ${format}`)
+    }
+  }
+
+  public generateReport (targetPath: string): void {
+    try {
+      const report = this.facade.generateReport(targetPath);
+      const time = new Date().toISOString().replace(/:/g, '-').replace(/\./g, '-');
+      const fileName = `report-${time}.${this.fileExtension}`;
+      const fullPath = path.join(ReportManager.REPORTS_DIR, fileName);
+
+      fs.writeFileSync(fullPath, report);
+
+      console.log(`Report has generated succesfully: ${fullPath}`);
+    } catch (err) {
+      console.log (`Error generating report ${err}`)
+    }
+  }
 }
